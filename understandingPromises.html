@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+  /*     function byaCar(){
+        setTimeout(() => {
+            console.log("buy a car");
+        },10000)
+       }
+
+       function planatriptoManali(){
+        setTimeout(() => {
+            console.log("Let's go to Manali");
+        },2000)
+       }
+
+       byaCar();
+       planatriptoManali();
+*/
+       // Let's go to Manali
+       // 15 buy a car   
+       
+       
+    //console.log("Lets use callback")
+       // use callback
+
+/*       function byaCar(cb){
+        setTimeout(() => {
+            console.log("buy a car");
+            cb(reachManali);
+        },10000)
+       }
+
+       function planatriptoManali(cbb){
+        setTimeout(() => {
+            console.log("Let's go to Manali");
+            cbb();
+        },2000)
+       }
+       
+       function reachManali(){
+        setTimeout(() => {
+            console.log("reached Manali");
+        },2000)
+       }
+       
+       
+       byaCar(planatriptoManali);
+
+  */     
+
+
+/*    function byaCar(cb1,cb2,cb3){
+        setTimeout(() => {
+            console.log("buy a car");
+            cb1(cb2,cb3);
+        },10000)
+       }
+
+       function planatriptoManali(cb2,cb3){
+        setTimeout(() => {
+            console.log("Let's go to Manali");
+            cb2(cb3);
+        },2000)
+       }
+       
+       function reachManali(cb3){
+        setTimeout(() => {
+            console.log("reached Manali");
+            cb3();
+        },2000)
+       }
+       
+       function goToFamousMountain(){
+        setTimeout(() => {
+            console.log("reached Mountain");
+        },2000)
+       }
+       
+       byaCar(planatriptoManali,reachManali,goToFamousMountain);
+    // callback hell
+*/
+
+/*    function byaCar(){
+        return new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve("buy a car");
+            },10000)}
+       )}
+
+       function planatriptoManali(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve("Let's go to Manali");
+        },2000)}
+       )}
+       
+       function reachManali(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve("reached Manali");
+        },2000)}
+       )}
+       
+       function goToFamousMountain(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve("reached Mountain");
+        },2000)}
+       )}
+       
+      byaCar().then((msg1)=>{
+        console.log(msg1);
+        planatriptoManali().then((msg2)=>{
+            console.log(msg2);
+            reachManali().then((msg3)=>{
+                console.log(msg3);
+                goToFamousMountain().then((msg4)=>{
+                   console.log(msg4);
+                })
+            })    
+        })
+    })
+// promise hell
+*/ 
+
+
+function byaCar(){
+        return new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve("buy a car");
+            },10000)}
+       )}
+
+       function planatriptoManali(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve("Let's go to Manali");
+        },2000)}
+       )}
+       
+       function reachManali(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve("reached Manali");
+        },2000)}
+       )}
+       
+       function goToFamousMountain(){
+        return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            reject("reached Mountain cancelled");
+        },2000)}
+       )}
+     
+       async function fun1(){
+        try{
+            const msg1=await byaCar()
+            console.log(msg1);
+            const msg2=await planatriptoManali()
+            console.log(msg2);
+            const msg3=await reachManali()
+            console.log(msg3);
+            const msg4=await goToFamousMountain()
+            console.log(msg4);
+            } catch(errorMsg){
+                console.log(errorMsg);
+        }
+       }
+   fun1();
+
+    </script>
+</body>
+</html>
