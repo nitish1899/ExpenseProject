@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <title>Item Lister</title>
+</head> -->
+<body>
+    <form id="formItem">
+      <!-- try with onsubmit=functionName(e) -->
+        <level>Name</level>
+        <input type="text" id="Name" name="username" placeholder="userName" required>
+        <level>EmailId</level>
+        <input type="email" id="Email" name="emailId" placeholder="email" required>
+        <level>Phonenumber</level>
+        <input type="tel" id="phno" name="phonenumber" placeholder="phonenumber">
+        <button>Submit</button>        
+    </form>
+    <ul id="listOfUsers"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    <script>
+      let form=document.getElementById('formItem'); 
+      form.addEventListener('submit',function(event){
+        event.preventDefault()// prevent the form fromautosubmitting
+           const name=event.target.username.value;
+           const email=event.target.emailId.value;
+           const phonenumber=event.target.phonenumber.value;
+    
+          // Storing Objects
+              let myObj={
+                Name:name,
+                Email:email,
+                PhNo:phonenumber
+              };
+              axios.post("https://crudcrud.com/api/cca16506fb6a4a558f03c95f08bfa010/AppointmentData",myObj)
+               .then((response) => {console.log(response)
+                showsNewUserOnScreen(response.data);
+              })
+               .catch((err) => {console.log(err)})    
+    })
+    
+    function showsNewUserOnScreen(user){
+      document.getElementById('Name').value="";
+      document.getElementById('Email').value="";
+      document.getElementById('phno').value="";
+      if(localStorage.getItem(user.Email) != null){
+        removeUserFromScreen(user.Email);
+      }
+      const parentNode=document.getElementById('listOfUsers');
+      const children=`<li id="${user.Email}"> ${user.Name}- ${user.Email}-${user.PhNo}
+                      <button onclick=deleteUser('${user.Email}')>DeleteUser</button> 
+                      <button onclick=editUser('${user.Name}','${user.Email}','${user.PhNo}')>EditUser</button> 
+                      </li>`;
+      parentNode.innerHTML=children+parentNode.innerHTML;
+    }
+
+    //deleteUser
+    function deleteUser(email){
+         localStorage.removeItem(email);
+         removeUserFromScreen(email);
+    }
+
+    //editUser
+    function editUser(name,email,phno){
+        document.getElementById('Name').value=name;
+        document.getElementById('Email').value=email;
+        document.getElementById('phno').value=phno;
+
+        deleteUser(email);
+    }
+
+    function  removeUserFromScreen(email){
+      const parentNode=document.getElementById('listOfUsers');
+      const childNodeToBeDeleted=document.getElementById(email);
+      if(childNodeToBeDeleted){
+        parentNode.removeChild(childNodeToBeDeleted);
+      }
+    }
+    
+  window.addEventListener("DOMContentLoaded",()=>{
+    const value = axios.get("https://crudcrud.com/api/cca16506fb6a4a558f03c95f08bfa010/AppointmentData");
+    Object.keys(localStorage).forEach((key) => {
+      stringifiedDetailsOfPeople = localStorage.getItem(key);
+      detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
+      showsNewUserOnScreen(detailsOfPeople);
+    });
+    console.log(value);
+  })
+    </script>
+    </body>
+</html>
